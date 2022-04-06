@@ -17,6 +17,7 @@ var (
 func init() {
 	flag.StringVar(&keypairPath, "keypair", "", "keypair path (required)")
 	flag.StringVar(&programIdB58, "pid", "", "base58 program id (required)")
+	flag.Parse()
 }
 
 func main() {
