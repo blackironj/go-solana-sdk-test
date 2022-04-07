@@ -42,6 +42,7 @@ func GetHelloWorld(payer types.Account, programIdB58 string) *HelloWorld {
 		log.Fatalf("this program is unexcutable")
 	}
 
+	fmt.Println("Using account ", payer.PublicKey.String())
 	fmt.Println("Using program ", programIdB58)
 
 	payerPubkey := payer.PublicKey
@@ -121,6 +122,13 @@ func (h *HelloWorld) SayHello() {
 			RecentBlockhash: blockhash.Blockhash,
 		},
 	)
+
+	networkFee, err := h.conn.GetFeeForMessage(ctx, msg)
+	if err != nil {
+		log.Fatalf("fail to get network fee")
+	}
+
+	fmt.Println("Network fee: ", float64(*networkFee), " Lamports")
 
 	tx, err := types.NewTransaction(
 		types.NewTransactionParam{
